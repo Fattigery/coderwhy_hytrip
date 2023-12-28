@@ -1,29 +1,20 @@
 # coderwhy_hytrip
 
-This template should help get you started developing with Vue 3 in Vite.
+## 技术栈
 
-## Recommended IDE Setup
+Vue3 + Vite + VueRouter + Pinia
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## 安装依赖
 
 ```sh
-npm install
+pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+### 运行项目
 
 ```sh
-npm run dev
+pnpm dev
 ```
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+## 笔记地址
+[项目笔记](https://pjd06mek3n.feishu.cn/drive/folder/I0uufld3ZlTx47dztCvc1iodnKh)
