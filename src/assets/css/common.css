@@ -1,7 +1,6 @@
 /* 公共样式 */
 :root {
 	--primary-color: #ff9854;
-	--van-primary-color: var(--primary-color);
 }
 
 body {
