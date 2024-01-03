@@ -1,6 +1,10 @@
 <template>
 	<div class="city">
-		<van-tabs v-model:active="active" sticky>
+		<!-- 1.搜索框 -->
+		<van-search v-model="searchValue" shape="round" placeholder="城市/区域/位置" show-action @cancel="cancelClick" />
+
+		<!-- 2.tab切换 -->
+		<van-tabs v-model:active="tabActive" color="#ff9854" sticky>
 			<van-tab title="国内">
 				<van-index-bar :index-list="indexList">
 					<van-index-anchor index="#" />
@@ -64,7 +68,25 @@
 
 <script setup>
 	import { ref } from 'vue';
-	let active = ref(0);
+	import { getCityData } from '@/services';
+	import { useRouter } from 'vue-router';
+	let router = useRouter();
+
+	// 搜索框功能
+	let searchValue = ref('');
+	function cancelClick() {
+		// 返回上一页
+		router.back();
+	}
+
+	// tab切换
+	let tabActive = ref(0);
+
+	// 请求城市的数据
+	getCityData().then(res => {
+		console.log(res.data);
+	});
+
 	let indexList = [
 		'#',
 		'A',
