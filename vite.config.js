@@ -20,6 +20,16 @@ export default defineConfig({
 	},
 	server: {
 		port: 3000,
-		host: true
+		host: true,
+		proxy: {
+			// 跨域代理
+			// 匹配以/api开头的请求，代理到target，将/api重写为空
+			'/api': {
+				target: 'http://api.map.baidu.com',
+				changeOrigin: true,
+				// 将/api重写为空
+				rewrite: path => path.replace(/^\/api/, '')
+			}
+		}
 	}
 });

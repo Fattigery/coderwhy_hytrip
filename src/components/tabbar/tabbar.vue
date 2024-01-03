@@ -26,6 +26,7 @@
 	.tabbar {
 		img {
 			height: 28px;
+			object-fit: contain;
 		}
 	}
 </style>
