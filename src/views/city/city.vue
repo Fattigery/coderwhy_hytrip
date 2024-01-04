@@ -1,93 +1,63 @@
 <template>
 	<div class="city">
-		<!-- 1.搜索框 -->
-		<van-search v-model="searchValue" shape="round" placeholder="城市/区域/位置" show-action @cancel="cancelClick" />
+		<div class="top">
+			<!-- 1.搜索框 -->
+			<van-search v-model="searchValue" shape="round" placeholder="城市/区域/位置" show-action @cancel="cancelClick" />
 
-		<!-- 2.tab切换 -->
-		<van-tabs v-model:active="tabActive" color="#ff9854" sticky>
-			<van-tab title="国内">
-				<van-index-bar :index-list="indexList">
-					<van-index-anchor index="#" />
-					<div class="box">...</div>
+			<!-- 2.tab切换 -->
+			<van-tabs v-model:active="tabActive" color="#ff9854" sticky>
+				<template v-for="(value, key, index) in allCities" :key="key">
+					<van-tab :title="value.title" :name="key"></van-tab>
+				</template>
+			</van-tabs>
+		</div>
 
-					<van-index-anchor index="A" />
-					<van-cell title="文本" />
-					<van-cell title="文本" />
-					<van-cell title="文本" />
-
-					<van-index-anchor index="B" />
-					<van-cell title="文本" />
-					<van-cell title="文本" />
-					<van-cell title="文本" />
-				</van-index-bar>
-			</van-tab>
-			<van-tab title="国外">
-				<van-index-bar :index-list="indexList">
-					<van-index-anchor index="#" />
-					<div class="box">...</div>
-
-					<van-index-anchor index="A" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-
-					<van-index-anchor index="B" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-
-					<van-index-anchor index="C" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-
-					<van-index-anchor index="D" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-
-					<van-index-anchor index="E" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-
-					<van-index-anchor index="F" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-
-					<van-index-anchor index="G" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-					<van-cell title="文本2" />
-				</van-index-bar>
-			</van-tab>
-		</van-tabs>
+		<div class="content">
+			<!-- listBar -->
+			<van-index-bar :index-list="indexList">
+				<template v-for="item in currentGroup?.cities">
+					<van-index-anchor :index="item.group" />
+					<template v-for="item1 in item.cities">
+						<van-cell :title="item1.cityName" />
+					</template>
+				</template>
+			</van-index-bar>
+		</div>
 	</div>
 </template>
 
 <script setup>
-	import { ref } from 'vue';
-	import { getCityData } from '@/services';
+	import { ref, toRefs, computed } from 'vue';
 	import { useRouter } from 'vue-router';
-	let router = useRouter();
+	import { useCityStore } from '@/stores/modules/city.js';
+
+	const router = useRouter();
+	const cityStore = useCityStore();
 
 	// 搜索框功能
-	let searchValue = ref('');
+	const searchValue = ref('');
 	function cancelClick() {
 		// 返回上一页
 		router.back();
 	}
 
 	// tab切换
-	let tabActive = ref(0);
+	const tabActive = ref('');
 
-	// 请求城市的数据
-	getCityData().then(res => {
-		console.log(res.data);
-	});
+	// 获取城市的数据
+	cityStore.fetchCitiesData();
+	let { allCities } = toRefs(cityStore);
 
-	let indexList = [
+	/**
+	 * 目的：获取选中标签对应的城市数据，用于展示
+	 * 1.获取正确的key
+	 * 	1.1.给tab绑定name属性，值为key，这样tabs绑定的tabActive的值就是key了。
+	 * 2.根据key从allCities中获取对应的城市数据
+	 * 	2.1.默认直接获取的数据不是响应式的，所以需要使用computed计算属性（计算属性：当依赖项发生变化时，会重新计算）
+	 */
+	let currentGroup = computed(() => allCities.value[tabActive.value]);
+
+	const indexList = [
 		'#',
 		'A',
 		'B',
@@ -97,20 +67,16 @@
 		'F',
 		'G',
 		'H',
-		'I',
 		'J',
 		'K',
 		'L',
 		'M',
 		'N',
-		'O',
 		'P',
 		'Q',
 		'R',
 		'S',
 		'T',
-		'U',
-		'V',
 		'W',
 		'X',
 		'Y',
@@ -120,13 +86,10 @@
 
 <style lang="less" scoped>
 	.city {
-		.box {
-			height: 300px;
-			padding: 0 16px;
-		}
+		.content {
+			height: calc(100vh - 98px);
 
-		:deep(.van-tabs__nav--line) {
-			z-index: 2;
+			overflow-y: auto;
 		}
 	}
 </style>

@@ -23,12 +23,12 @@ export default defineConfig({
 		host: true,
 		proxy: {
 			// 跨域代理
-			// 匹配以/api开头的请求，代理到target，将/api重写为空
-			'/api': {
+			// 匹配以/baidu开头的请求，代理到target，将/baidu重写为空
+			'/baidu': {
 				target: 'http://api.map.baidu.com',
 				changeOrigin: true,
-				// 将/api重写为空
-				rewrite: path => path.replace(/^\/api/, '')
+				// 将/baidu重写为空
+				rewrite: path => path.replace(/^\/baidu/, '')
 			}
 		}
 	}

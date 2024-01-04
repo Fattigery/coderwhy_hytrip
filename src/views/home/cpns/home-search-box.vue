@@ -29,7 +29,7 @@
 				// 经度
 				let latitude = position.coords.latitude;
 				// https://api.map.baidu.com/reverse_geocoding/v3/?ak=DNMDVVOsIRSX0QYW98XuiinvIdgNLk1E&output=json&coordtype=wgs84ll&location=${latitude},${longitude}
-				let res = await fetch(`/api/geocoder?location=${latitude},${longitude}&output=json`);
+				let res = await fetch(`/baidu/geocoder?location=${latitude},${longitude}&output=json`);
 				let data = await res.json();
 				let city = data.result.addressComponent.city;
 				let district = data.result.addressComponent.district;
