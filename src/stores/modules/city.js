@@ -11,7 +11,6 @@ export const useCityStore = defineStore('city', {
 		async fetchCitiesData() {
 			let res = await getCityData();
 			this.allCities = res.data;
-
 		}
 	}
 });

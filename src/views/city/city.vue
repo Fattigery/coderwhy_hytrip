@@ -1,5 +1,6 @@
 <template>
 	<div class="city">
+		<!-- 顶部固定区域 -->
 		<div class="top">
 			<!-- 1.搜索框 -->
 			<van-search v-model="searchValue" shape="round" placeholder="城市/区域/位置" show-action @cancel="cancelClick" />
@@ -12,16 +13,15 @@
 			</van-tabs>
 		</div>
 
+		<!-- 内容滚动区域 -->
 		<div class="content">
-			<!-- listBar -->
-			<van-index-bar :index-list="indexList">
-				<template v-for="item in currentGroup?.cities">
-					<van-index-anchor :index="item.group" />
-					<template v-for="item1 in item.cities">
-						<van-cell :title="item1.cityName" />
-					</template>
-				</template>
-			</van-index-bar>
+			<!-- 旧：每次tab切换都根据最新的currentGroup数据进行渲染，会导致切换缓慢 -->
+			<!-- <city-group :currentGroupData="currentGroup"></city-group> -->
+
+			<!-- tab切换性能优化 -->
+			<template v-for="(value, key) in allCities">
+				<city-group :currentGroupData="value" v-show="tabActive === key"></city-group>
+			</template>
 		</div>
 	</div>
 </template>
@@ -30,6 +30,7 @@
 	import { ref, toRefs, computed } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { useCityStore } from '@/stores/modules/city.js';
+	import cityGroup from './cpns/city-group.vue';
 
 	const router = useRouter();
 	const cityStore = useCityStore();
@@ -55,40 +56,17 @@
 	 * 2.根据key从allCities中获取对应的城市数据
 	 * 	2.1.默认直接获取的数据不是响应式的，所以需要使用computed计算属性（计算属性：当依赖项发生变化时，会重新计算）
 	 */
-	let currentGroup = computed(() => allCities.value[tabActive.value]);
-
-	const indexList = [
-		'#',
-		'A',
-		'B',
-		'C',
-		'D',
-		'E',
-		'F',
-		'G',
-		'H',
-		'J',
-		'K',
-		'L',
-		'M',
-		'N',
-		'P',
-		'Q',
-		'R',
-		'S',
-		'T',
-		'W',
-		'X',
-		'Y',
-		'Z'
-	];
+	// let currentGroup = computed(() => allCities.value[tabActive.value]);
 </script>
 
 <style lang="less" scoped>
 	.city {
+		.top {
+			position: relative;
+			z-index: 9;
+		}
 		.content {
 			height: calc(100vh - 98px);
-
 			overflow-y: auto;
 		}
 	}

@@ -2,7 +2,7 @@
 	<div class="search-box">
 		<div class="location">
 			<div class="city">
-				<span @click="cityClick">广州</span>
+				<span @click="cityClick">{{ homeStore.city }}</span>
 			</div>
 			<div class="position" @click="positionClick">
 				<span class="text">我的位置</span>
@@ -14,7 +14,11 @@
 
 <script setup>
 	import { useRouter } from 'vue-router';
+	import { useHomeStore } from '@/stores/modules/home';
+
 	const router = useRouter();
+	const homeStore = useHomeStore();
+
 	// 点击城市跳转到城市选择页面
 	function cityClick() {
 		router.push('/city');
