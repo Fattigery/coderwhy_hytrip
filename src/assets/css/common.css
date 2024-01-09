@@ -1,6 +1,7 @@
 /* 公共样式 */
 :root {
 	--primary-color: #ff9854;
+	--line-color: #faf8f9;
 	/* 修改搜索框icon的颜色 */
 	--van-search-left-icon-color: var(--primary-color) !important;
 }
@@ -9,4 +10,9 @@ body {
 	font-size: 14px;
 	font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑',
 		STXihei, '华文细黑', sans-serif;
+}
+
+/* 底部的灰色线 */
+.bottom-gray-line {
+	border-bottom: 1px solid var(--line-color);
 }

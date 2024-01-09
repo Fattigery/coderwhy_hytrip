@@ -11,11 +11,10 @@ export function formatMonthDay(date) {
 }
 
 /**
- * 获取两个日期之间的天数
- * @param {*} date1 开始日期
- * @param {*} date2 结束日期
- * @returns
+ * 获取两个日期之间的天数差
+ * @param {*} startDate 开始日期
+ * @param {*} endDate 结束日期
  */
-export function diffValue(date1, date2) {
-	return dayjs(date2).diff(date1, 'day');
+export function getDiffDate(startDate, endDate) {
+	return dayjs(endDate).diff(startDate, 'day');
 }

@@ -7,7 +7,7 @@
 
 			<!-- 2.tab切换 -->
 			<van-tabs v-model:active="tabActive" color="#ff9854" sticky>
-				<template v-for="(value, key, index) in allCities" :key="key">
+				<template v-for="(value, key) in allCities" :key="key">
 					<van-tab :title="value.title" :name="key"></van-tab>
 				</template>
 			</van-tabs>
@@ -18,7 +18,10 @@
 			<!-- 旧：每次tab切换都根据最新的currentGroup数据进行渲染，会导致切换缓慢 -->
 			<!-- <city-group :currentGroupData="currentGroup"></city-group> -->
 
-			<!-- tab切换性能优化 -->
+			<!--
+				tab切换性能优化:
+				 - 最开始就渲染出所有的indexBar，然后使用v-show根据tabActive的改变来显示某一个indexBar。
+			 -->
 			<template v-for="(value, key) in allCities">
 				<city-group :currentGroupData="value" v-show="tabActive === key"></city-group>
 			</template>
