@@ -53,6 +53,11 @@
 				<div class="tag">{{ item.tagText.text }}</div>
 			</template>
 		</div>
+
+		<!-- 开始搜索按钮 -->
+		<div class="item search-btn">
+			<div class="btn" @click="searchBtnClick">开始搜索</div>
+		</div>
 	</div>
 </template>
 
@@ -130,6 +135,18 @@
 
 	// 从homeStore中获取热门推荐数据
 	const { hotSuggests } = toRefs(homeStore);
+
+	// 点击开始搜索按钮，跳转到搜索页面
+	function searchBtnClick() {
+		router.push({
+			path: '/search',
+			query: {
+				startDate: startDate.value,
+				endDate: endDate.value,
+				currentCity: currentCity.value.cityName
+			}
+		});
+	}
 </script>
 
 <style lang="less" scoped>
@@ -203,6 +220,20 @@
 				margin: 5px;
 				margin-left: 0;
 				font-size: 12px;
+			}
+		}
+
+		.search-btn {
+			.btn {
+				width: 100%;
+				height: 38px;
+				background-image: var(--theme-linear-gradient);
+				color: #fff;
+				font-weight: 500;
+				font-size: 18px;
+				text-align: center;
+				line-height: 38px;
+				border-radius: 20px;
 			}
 		}
 	}
