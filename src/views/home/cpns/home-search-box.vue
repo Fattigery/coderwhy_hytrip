@@ -215,6 +215,7 @@
 
 			.tag {
 				background-color: #ff9854;
+				color: #fff;
 				border-radius: 10px;
 				padding: 4px 8px;
 				margin: 5px;
