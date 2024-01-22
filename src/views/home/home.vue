@@ -9,16 +9,17 @@
 		<home-search-box />
 		<home-categories />
 		<home-content />
-		<button @click="btnClick">获取房屋列表数据</button>
 	</div>
 </template>
 
 <script setup>
+	import { watch } from 'vue';
 	import homeNavBar from './cpns/home-nav-bar.vue';
 	import homeSearchBox from './cpns/home-search-box.vue';
 	import homeCategories from './cpns/home-categories.vue';
 	import homeContent from './cpns/home-content.vue';
 	import { useHomeStore } from '@/stores/modules/home';
+	import { useScroll } from '@/hooks/useScroll.js';
 
 	const homeStore = useHomeStore();
 
@@ -30,9 +31,22 @@
 	// 获取房屋列表数据
 	homeStore.fetchHouseListData();
 
-	function btnClick() {
-		homeStore.fetchHouseListData();
-	}
+	// 触底加载更多功能
+	// 方案一：传入一个回调函数，当滚动到底部的时候，会调用这个回调函数
+	// useScroll(() => {
+	// 	homeStore.fetchHouseListData();
+	// });
+
+	// 方案二：监听变量的变化
+	const { isBottom } = useScroll();
+	watch(isBottom, newValue => {
+		if (newValue) {
+			homeStore.fetchHouseListData().then(() => {
+				// 当数据加载完成之后，由于高度发生了变化，需要将isBottom重新设置为false
+				isBottom.value = false;
+			});
+		}
+	});
 </script>
 
 <style lang="less" scoped></style>

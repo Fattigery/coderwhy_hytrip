@@ -16,7 +16,7 @@
 				<div class="price">
 					<div class="new">{{ '￥' + houseData.finalPrice }}</div>
 					<div class="old">{{ '￥' + houseData.productPrice }}</div>
-					<div class="discount">{{ houseData.priceTipBadge.text }}</div>
+					<div class="discount">{{ houseData.priceTipBadge?.text }}</div>
 				</div>
 			</div>
 		</div>
@@ -37,7 +37,7 @@
 		position: relative;
 
 		width: 50%;
-		// background-color: red;
+		height: 233px;
 
 		.item-inner {
 			padding: 5px;

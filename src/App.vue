@@ -1,6 +1,10 @@
 <template>
 	<div class="app">
-		<router-view></router-view>
+		<router-view v-slot="{ Component }">
+			<keep-alive>
+				<component :is="Component"></component>
+			</keep-alive>
+		</router-view>
 
 		<!-- 判断tabbar组件是否需要隐藏 -->
 		<Tabbar v-if="!route.meta.hideTabbar"></Tabbar>

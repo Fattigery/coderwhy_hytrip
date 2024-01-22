@@ -25,6 +25,7 @@
 <style lang="less" scoped>
 	.tabbar {
 		height: 50px;
+
 		img {
 			height: 28px;
 			object-fit: contain;

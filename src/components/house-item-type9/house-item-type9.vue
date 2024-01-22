@@ -36,6 +36,7 @@
 <style lang="less" scoped>
 	.house-item {
 		width: 50%;
+		height: 233px;
 
 		.item-inner {
 			position: relative;
