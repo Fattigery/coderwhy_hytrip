@@ -8,16 +8,22 @@
 
 		<home-search-box />
 		<home-categories />
+
+		<div class="home-search-bar" v-show="isShowSearchBar">
+			<search-bar />
+		</div>
+
 		<home-content />
 	</div>
 </template>
 
 <script setup>
-	import { watch } from 'vue';
+	import { computed, ref, watch } from 'vue';
 	import homeNavBar from './cpns/home-nav-bar.vue';
 	import homeSearchBox from './cpns/home-search-box.vue';
 	import homeCategories from './cpns/home-categories.vue';
 	import homeContent from './cpns/home-content.vue';
+	import searchBar from '@/components/search-bar/search-bar.vue';
 	import { useHomeStore } from '@/stores/modules/home';
 	import { useScroll } from '@/hooks/useScroll.js';
 
@@ -38,7 +44,7 @@
 	// });
 
 	// 方案二：监听变量的变化
-	const { isBottom } = useScroll();
+	const { isBottom, scrollTop } = useScroll();
 	watch(isBottom, newValue => {
 		if (newValue) {
 			homeStore.fetchHouseListData().then(() => {
@@ -47,6 +53,34 @@
 			});
 		}
 	});
+
+	// 搜索框显示隐藏的控制
+	// const isShowSearchBar = ref(false);
+	// watch(scrollTop, newValue => {
+	// 	isShowSearchBar.value = newValue >= 100;
+	// });
+	const isShowSearchBar = computed(() => scrollTop.value >= 360);
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+	.home-search-bar {
+		position: fixed;
+		z-index: 9;
+		left: 0;
+		right: 0;
+		height: 71px;
+		padding: 16px 16px 10px;
+		background-color: #fff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		animation: scroll 0.3s forwards;
+	}
+
+	@keyframes scroll {
+		0% {
+			top: -71px;
+		}
+		100% {
+			top: 0;
+		}
+	}
+</style>

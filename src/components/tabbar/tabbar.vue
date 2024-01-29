@@ -1,6 +1,6 @@
 <template>
 	<div class="tabbar">
-		<van-tabbar v-model="active" active-color="#ff9854">
+		<van-tabbar v-model="active" active-color="#ff9854" route>
 			<van-tabbar-item v-for="(item, index) in tabbarDate" :key="index" :to="item.path">
 				<span>{{ item.text }}</span>
 				<template #icon="props">

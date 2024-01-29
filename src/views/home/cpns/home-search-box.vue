@@ -18,12 +18,12 @@
 		<div class="item date-range bottom-gray-line" @click="showCalendar = true">
 			<div class="start">
 				<span>入住</span>
-				<span>{{ startDate }}</span>
+				<span>{{ startDateStr }}</span>
 			</div>
 			<div class="stay">共{{ stayCount }}晚</div>
 			<div class="end">
 				<span>离店</span>
-				<span>{{ endDate }}</span>
+				<span>{{ endDateStr }}</span>
 			</div>
 		</div>
 
@@ -62,10 +62,11 @@
 </template>
 
 <script setup>
-	import { ref, toRefs } from 'vue';
+	import { ref, toRefs, computed } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { useCityStore } from '@/stores/modules/city';
 	import { useHomeStore } from '@/stores/modules/home';
+	import { useMainStore } from '@/stores/modules/main.js';
 	import { formatMonthDay, getDiffDate } from '@/utils/format_date.js';
 
 	const router = useRouter();
@@ -102,14 +103,13 @@
 	}
 
 	// 日期范围的处理
-	const nowDate = new Date();
-	const newDate = new Date();
-	newDate.setDate(newDate.getDate() + 1);
+	const mainStore = useMainStore();
+	const { startDate, endDate } = toRefs(mainStore);
 
-	const startDate = ref(formatMonthDay(nowDate));
-	const endDate = ref(formatMonthDay(newDate));
+	const startDateStr = computed(() => formatMonthDay(startDate.value));
+	const endDateStr = computed(() => formatMonthDay(endDate.value));
 	// 日期范围之间的天数差
-	const stayCount = ref(getDiffDate(nowDate, newDate));
+	const stayCount = ref(getDiffDate(startDate.value, endDate.value));
 
 	// 控制日历组件的显示与隐藏
 	const showCalendar = ref(false);
@@ -127,8 +127,8 @@
 		// 隐藏日历组件
 		showCalendar.value = false;
 		// 保存选择的日期范围
-		startDate.value = formatMonthDay(value[0]);
-		endDate.value = formatMonthDay(value[1]);
+		mainStore.startDate = value[0];
+		mainStore.endDate = value[1];
 		// 保存日期范围之间的天数差
 		stayCount.value = getDiffDate(value[0], value[1]);
 	}
