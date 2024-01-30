@@ -3,8 +3,11 @@
 	--primary-color: #ff9854;
 	--line-color: #faf8f9;
 	--theme-linear-gradient: linear-gradient(90deg, #fa8c1d, #fcaf3f);
+
 	/* 修改搜索框icon的颜色 */
 	--van-search-left-icon-color: var(--primary-color) !important;
+	/* NavBar导航组件的主体色 */
+	--van-primary-color: var(--primary-color);
 }
 
 body {

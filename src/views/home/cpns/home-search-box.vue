@@ -102,13 +102,14 @@
 		);
 	}
 
-	// 日期范围的处理
+	// 日期的处理
+	// 将日期在mainStore中进行管理（方便其他地方使用）
 	const mainStore = useMainStore();
 	const { startDate, endDate } = toRefs(mainStore);
 
 	const startDateStr = computed(() => formatMonthDay(startDate.value));
 	const endDateStr = computed(() => formatMonthDay(endDate.value));
-	// 日期范围之间的天数差
+	// 日期之间的天数差
 	const stayCount = ref(getDiffDate(startDate.value, endDate.value));
 
 	// 控制日历组件的显示与隐藏
