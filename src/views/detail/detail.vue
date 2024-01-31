@@ -1,6 +1,12 @@
 <template>
 	<div class="detail">
+		<!-- NavBar -->
 		<van-nav-bar title="房屋详情" left-text="旅途" left-arrow @click-left="onClickLeft" />
+
+		<!-- 轮播图 -->
+		<div class="main" v-if="mainPart">
+			<detail-swipe :swipe-data="mainPart.topModule.housePicture.housePics"></detail-swipe>
+		</div>
 	</div>
 </template>
 
@@ -8,6 +14,7 @@
 	import { computed, ref } from 'vue';
 	import { useRoute, useRouter } from 'vue-router';
 	import { getDetailData } from '@/services/index.js';
+	import DetailSwipe from './cpns/detail-swipe.vue';
 
 	const router = useRouter();
 	const route = useRoute();
@@ -17,6 +24,7 @@
 	const detailInfos = ref({});
 	const mainPart = computed(() => detailInfos.value.mainPart);
 	getDetailData(houseId).then(res => {
+		console.log(res.data);
 		detailInfos.value = res.data;
 	});
 
