@@ -9,7 +9,7 @@
 		<!-- 判断tabbar组件是否需要隐藏 -->
 		<Tabbar v-if="!route.meta.hideTabbar"></Tabbar>
 
-		<!-- loading -->
+		<!-- loading组件 -->
 		<Loading />
 	</div>
 </template>

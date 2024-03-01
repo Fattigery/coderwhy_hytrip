@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-	import { computed, ref, watch } from 'vue';
+	import { computed, ref, watch, onActivated } from 'vue';
 	import homeNavBar from './cpns/home-nav-bar.vue';
 	import homeSearchBox from './cpns/home-search-box.vue';
 	import homeCategories from './cpns/home-categories.vue';
@@ -52,6 +52,11 @@
 				isBottom.value = false;
 			});
 		}
+	});
+
+	onActivated(() => {
+		// 每次切换回组件时将scrollTop的值重新赋值为0（解决切换回组件时scrollTop没有重新计算导致的SearchBar组件显示出来的问题）
+		scrollTop.value = 0;
 	});
 
 	// !搜索框显示隐藏的控制
