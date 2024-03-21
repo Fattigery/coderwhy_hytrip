@@ -34,6 +34,7 @@
 		.bg {
 			width: 104px;
 			height: 104px;
+			// background: image position / size
 			background: url('@/assets/img/home/loading-bg.png') 0 0 / 100% 100%;
 
 			display: flex;

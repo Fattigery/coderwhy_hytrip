@@ -81,7 +81,7 @@
 	// 获取选择的城市
 	const { currentCity } = toRefs(cityStore);
 
-	// 点击获取当前位置
+	// 点击获取当前位置（如果获取不到，可以尝试开启VPN，好像是因为需要连接国外的网站）
 	function positionClick() {
 		navigator.geolocation.getCurrentPosition(
 			async position => {

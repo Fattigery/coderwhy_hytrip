@@ -29,9 +29,10 @@
 
 	const { houselist } = toRefs(homeStore);
 
-	const itemClick = item => {
+	const itemClick = itemData => {
+		console.log(itemData);
 		// 点击房屋时，跳转到房屋详情页(detail.vue)，并携带房屋id
-		router.push(`/detail/${item.houseId}`);
+		router.push(`/detail/${itemData.houseId}`);
 	};
 </script>
 
